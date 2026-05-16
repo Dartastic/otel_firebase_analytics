@@ -1,0 +1,25 @@
+name: otel_firebase_analytics
+description: OpenTelemetry instrumentation for `package:firebase_analytics`.
+  Forwards Firebase Analytics events as OTel spans + SpanEvents on the
+  active span, so analytics activity appears in your distributed traces.
+version: 0.1.0-beta.1-wip
+repository: https://github.com/dartastic/otel_firebase_analytics
+homepage: https://dartastic.io
+
+environment:
+  sdk: ^3.0.0
+  flutter: ">=3.0.0"
+
+dependencies:
+  dartastic_opentelemetry: ^1.1.0-beta.4
+  dartastic_opentelemetry_api: ^1.0.0-beta.6
+  firebase_analytics: ^11.0.0
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  dart_flutter_team_lints: ^3.5.2
+  flutter_test:
+    sdk: flutter
+  pub_semver: ^2.0.0
+  pubspec_parse: ^1.5.0
