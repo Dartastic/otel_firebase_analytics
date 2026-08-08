@@ -26,7 +26,7 @@ await analytics.tracedLogScreenView(
 );
 
 await analytics.tracedSetUserId(id: user.uid);
-await analytics.tracedSetUserProperty(name: 'subscription', value: 'pro');
+await analytics.tracedSetUserProperty(name: 'subscription', value: 'premium');
 ```
 
 If you call analytics from inside a span (typical in a Flutter

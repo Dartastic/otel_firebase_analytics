@@ -3,6 +3,11 @@
 
 import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
+/// Key prefix for the flat fan-out of raw analytics-event
+/// parameters: each entry in the parameters map becomes an
+/// `analytics.parameters.<key>` span attribute.
+const String analyticsParametersPrefix = 'analytics.parameters.';
+
 /// Firebase Analytics attribute keys.
 ///
 /// `analytics.*` isn't a stable OTel semconv namespace yet — this
@@ -24,7 +29,11 @@ enum FirebaseAnalyticsSemantics implements OTelSemantic {
 
   /// `analytics.user_property.name` — the property name on
   /// `setUserProperty`.
-  userPropertyName('analytics.user_property.name');
+  userPropertyName('analytics.user_property.name'),
+
+  /// `analytics.user_property.value` — the property value on
+  /// `setUserProperty`.
+  userPropertyValue('analytics.user_property.value');
 
   @override
   final String key;

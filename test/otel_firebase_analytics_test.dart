@@ -30,6 +30,33 @@ Map<String, Object> _attrs(Span span) =>
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  group('FirebaseAnalyticsSemantics', () {
+    test('keys are the documented wire format', () {
+      expect(FirebaseAnalyticsSemantics.system.key, 'analytics.system');
+      expect(
+        FirebaseAnalyticsSemantics.eventName.key,
+        'analytics.event.name',
+      );
+      expect(
+        FirebaseAnalyticsSemantics.screenName.key,
+        'analytics.screen.name',
+      );
+      expect(
+        FirebaseAnalyticsSemantics.screenClass.key,
+        'analytics.screen.class',
+      );
+      expect(
+        FirebaseAnalyticsSemantics.userPropertyName.key,
+        'analytics.user_property.name',
+      );
+      expect(
+        FirebaseAnalyticsSemantics.userPropertyValue.key,
+        'analytics.user_property.value',
+      );
+      expect(analyticsParametersPrefix, 'analytics.parameters.');
+    });
+  });
+
   group('tracedAnalyticsCall', () {
     late _MemorySpanExporter exporter;
 

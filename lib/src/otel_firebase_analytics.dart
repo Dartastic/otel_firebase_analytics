@@ -63,7 +63,7 @@ Future<R> tracedAnalyticsCall<R>({
       FirebaseAnalyticsSemantics.eventName.key,
       eventName,
     ),
-    ..._mapToAttributes(parameters, keyPrefix: 'analytics.parameters.'),
+    ..._mapToAttributes(parameters, keyPrefix: analyticsParametersPrefix),
     ..._mapToAttributes(extraAttrs, keyPrefix: ''),
   ];
   final span = _tracer().startSpan(
@@ -76,7 +76,7 @@ Future<R> tracedAnalyticsCall<R>({
   } catch (e, st) {
     span.addAttributes(OTel.attributes([
       OTel.attributeString(
-        ErrorResource.errorType.key,
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));
@@ -143,7 +143,7 @@ extension OTelFirebaseAnalytics on FirebaseAnalytics {
     return tracedAnalyticsCall<void>(
       eventName: 'set_user_id',
       extraAttrs: <String, Object?>{
-        if (id != null) 'enduser.id': id,
+        if (id != null) Enduser.enduserId.key: id,
       },
       invoke: () => setUserId(id: id, callOptions: callOptions),
     );
@@ -159,7 +159,8 @@ extension OTelFirebaseAnalytics on FirebaseAnalytics {
       eventName: 'set_user_property',
       extraAttrs: <String, Object?>{
         FirebaseAnalyticsSemantics.userPropertyName.key: name,
-        if (value != null) 'analytics.user_property.value': value,
+        if (value != null)
+          FirebaseAnalyticsSemantics.userPropertyValue.key: value,
       },
       invoke: () => setUserProperty(
         name: name,
