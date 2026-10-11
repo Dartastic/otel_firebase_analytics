@@ -1,7 +1,7 @@
 // Licensed under the Apache License, Version 2.0
 // Copyright 2025, Mindful Software LLC, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'firebase_analytics_semantics.dart';
@@ -10,7 +10,7 @@ import 'firebase_analytics_suppression.dart';
 const _tracerName = 'otel_firebase_analytics';
 const _analyticsSystem = 'firebase_analytics';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 /// Converts a map into attribute objects. [keyPrefix] is prepended
 /// to each entry's key — pass `analytics.parameters.` for raw
@@ -27,15 +27,15 @@ List<Attribute<Object>> _mapToAttributes(
     if (v == null) continue;
     final key = '$keyPrefix${entry.key}';
     if (v is String) {
-      attrs.add(OTel.attributeString(key, v));
+      attrs.add(OTelAPI.attributeString(key, v));
     } else if (v is int) {
-      attrs.add(OTel.attributeInt(key, v));
+      attrs.add(OTelAPI.attributeInt(key, v));
     } else if (v is double) {
-      attrs.add(OTel.attributeDouble(key, v));
+      attrs.add(OTelAPI.attributeDouble(key, v));
     } else if (v is bool) {
-      attrs.add(OTel.attributeBool(key, v));
+      attrs.add(OTelAPI.attributeBool(key, v));
     } else {
-      attrs.add(OTel.attributeString(key, v.toString()));
+      attrs.add(OTelAPI.attributeString(key, v.toString()));
     }
   }
   return attrs;
@@ -55,11 +55,11 @@ Future<R> tracedAnalyticsCall<R>({
 }) async {
   if (firebaseAnalyticsInstrumentationSuppressed()) return invoke();
   final attrs = <Attribute<Object>>[
-    OTel.attributeString(
+    OTelAPI.attributeString(
       FirebaseAnalyticsSemantics.system.key,
       _analyticsSystem,
     ),
-    OTel.attributeString(
+    OTelAPI.attributeString(
       FirebaseAnalyticsSemantics.eventName.key,
       eventName,
     ),
@@ -69,13 +69,13 @@ Future<R> tracedAnalyticsCall<R>({
   final span = _tracer().startSpan(
     'analytics $eventName',
     kind: SpanKind.client,
-    attributes: OTel.attributesFromList(attrs),
+    attributes: OTelAPI.attributesFromList(attrs),
   );
   try {
     return await invoke();
   } catch (e, st) {
-    span.addAttributes(OTel.attributes([
-      OTel.attributeString(
+    span.addAttributes(OTelAPI.attributes([
+      OTelAPI.attributeString(
         ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
