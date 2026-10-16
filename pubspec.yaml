@@ -1,8 +1,8 @@
 name: otel_firebase_analytics
 description: >-
-  OpenTelemetry instrumentation for `package:firebase_analytics`. Forwards
-  Analytics events as OTel spans so analytics activity appears in your
-  distributed traces.
+  OpenTelemetry instrumentation for firebase_analytics by Dartastic.io. Adds
+  standard OpenTelemetry observability to applications that use
+  firebase_analytics.
 version: 0.3.1-wip
 repository: https://github.com/dartastic/otel_firebase_analytics
 homepage: https://dartastic.io
