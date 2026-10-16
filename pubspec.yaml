@@ -3,7 +3,7 @@ description: >-
   OpenTelemetry instrumentation for firebase_analytics by Dartastic.io. Adds
   standard OpenTelemetry observability to applications that use
   firebase_analytics.
-version: 0.3.1-wip
+version: 0.3.1
 repository: https://github.com/dartastic/otel_firebase_analytics
 homepage: https://dartastic.io
 
